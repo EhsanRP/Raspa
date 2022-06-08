@@ -75,7 +75,11 @@ public class RecipeServiceImpl implements RecipeService {
                 .map(x -> {
                     Ingredient ingredient = null;
                     try {
-                        ingredient = ingredientRepository.findById(x).get();
+                        var ingredientOptional = ingredientRepository.findById(x);
+                        if (ingredientOptional.isEmpty())
+                            throw new ResourceNotFoundException("Ingredient with id " + x + " not fount");
+                        ingredient = ingredientOptional.get();
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
