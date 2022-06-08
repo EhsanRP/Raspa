@@ -24,8 +24,8 @@ public class IngredientController {
     }
 
     @PostMapping("/save")
-    public IngredientCommand saveIngredient(@PathVariable String recipeId, @RequestBody IngredientCommand ingredientCommand) {
-        return ingredientService.saveIngredientCommand(Long.valueOf(recipeId), ingredientCommand);
+    public IngredientCommand saveIngredient( @RequestBody IngredientCommand ingredientCommand) {
+        return ingredientService.saveIngredientCommand(ingredientCommand);
     }
 
     @DeleteMapping("/delete/{ingredientId}")

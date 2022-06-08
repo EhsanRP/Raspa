@@ -23,22 +23,13 @@ public class IngredientServiceImpl implements IngredientService {
     IngredientRepository ingredientRepository;
 
     @Override
-    public IngredientCommand saveIngredientCommand(Long recipeId, IngredientCommand ingredientCommand) {
+    public IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand) {
         log.debug("Saving a new Ingredient");
 
-        var recipeOptional = recipeRepository.findById(recipeId);
-        if (recipeOptional.isEmpty())
-            throw new ResourceNotFoundException("Recipe with id " + recipeId + " not found");
-
-        var recipe = recipeOptional.get();
 
         var ingredient = ingredientConverter.entityMaker(ingredientCommand);
         ingredient.setRecipe(null);
         var savedIngredient = ingredientRepository.save(ingredient);
-        recipe.addIngredient(ingredient);
-
-        savedIngredient = ingredientRepository.save(savedIngredient);
-        recipeRepository.save(recipe);
 
         return ingredientConverter.commandMaker(savedIngredient);
     }

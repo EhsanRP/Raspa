@@ -6,7 +6,7 @@ import java.util.Set;
 
 public interface IngredientService {
 
-    IngredientCommand saveIngredientCommand(Long recipeId, IngredientCommand ingredientCommand);
+    IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand);
 
     void deleteById(Long ingredientId);
 
