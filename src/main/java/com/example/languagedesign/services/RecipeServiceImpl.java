@@ -4,8 +4,10 @@ import com.example.languagedesign.commands.IngredientCommand;
 import com.example.languagedesign.commands.RecipeCommand;
 import com.example.languagedesign.converters.IngredientConverter;
 import com.example.languagedesign.converters.RecipeConverter;
+import com.example.languagedesign.domain.Ingredient;
 import com.example.languagedesign.exceptions.ResourceNotFoundException;
 import com.example.languagedesign.repositories.CategoryRepository;
+import com.example.languagedesign.repositories.IngredientRepository;
 import com.example.languagedesign.repositories.RecipeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Value
 @RequiredArgsConstructor
@@ -23,6 +26,8 @@ public class RecipeServiceImpl implements RecipeService {
 
     RecipeConverter recipeConverter;
     IngredientConverter ingredientConverter;
+
+    IngredientRepository ingredientRepository;
     RecipeRepository recipeRepository;
     CategoryRepository categoryRepository;
     ImageService imageService;
@@ -65,6 +70,18 @@ public class RecipeServiceImpl implements RecipeService {
         log.debug("Saving a new Recipe");
 
         var recipe = recipeConverter.entityMaker(recipeCommand);
+        recipeCommand.getIngredientCommands()
+                .stream()
+                .map(x -> {
+                    Ingredient ingredient = null;
+                    try {
+                        ingredient = ingredientRepository.findById(x).get();
+                    } catch (Exception e) {
+
+                    }
+                    return ingredient;
+                })
+                .peek(recipe::addIngredient);
         recipe = recipeRepository.save(recipe);
         return recipeConverter.commandMaker(recipe);
     }
