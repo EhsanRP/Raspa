@@ -77,7 +77,7 @@ public class RecipeServiceImpl implements RecipeService {
                     try {
                         ingredient = ingredientRepository.findById(x).get();
                     } catch (Exception e) {
-
+                        e.printStackTrace();
                     }
                     return ingredient;
                 })
