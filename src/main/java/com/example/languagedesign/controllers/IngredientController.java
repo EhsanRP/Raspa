@@ -12,13 +12,13 @@ import java.util.Set;
 @Value
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/v1/ingredients/{recipeId}")
+@RequestMapping("api/v1/ingredients")
 public class IngredientController {
 
     RecipeService recipeService;
     IngredientService ingredientService;
 
-    @GetMapping("/all")
+    @GetMapping("/{recipeId}/all")
     public Set<IngredientCommand> findAllRecipeIngredients(@PathVariable String recipeId) {
         return recipeService.findRecipeIngredients(Long.valueOf(recipeId));
     }
