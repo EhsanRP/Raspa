@@ -2,6 +2,7 @@ package com.example.languagedesign.services;
 
 import com.example.languagedesign.commands.IngredientCommand;
 import com.example.languagedesign.converters.IngredientConverter;
+import com.example.languagedesign.domain.Ingredient;
 import com.example.languagedesign.exceptions.ResourceNotFoundException;
 import com.example.languagedesign.repositories.IngredientRepository;
 import com.example.languagedesign.repositories.RecipeRepository;
@@ -21,6 +22,11 @@ public class IngredientServiceImpl implements IngredientService {
     IngredientConverter ingredientConverter;
     RecipeRepository recipeRepository;
     IngredientRepository ingredientRepository;
+
+    @Override
+    public Set<IngredientCommand> findAll() {
+        return ingredientConverter.commandListMaker((Set<Ingredient>) ingredientRepository.findAll());
+    }
 
     @Override
     public IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand) {

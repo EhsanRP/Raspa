@@ -1,6 +1,7 @@
 package com.example.languagedesign.controllers;
 
 import com.example.languagedesign.commands.IngredientCommand;
+import com.example.languagedesign.domain.Ingredient;
 import com.example.languagedesign.services.IngredientService;
 import com.example.languagedesign.services.RecipeService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,11 @@ public class IngredientController {
     @GetMapping("/{recipeId}/all")
     public Set<IngredientCommand> findAllRecipeIngredients(@PathVariable String recipeId) {
         return recipeService.findRecipeIngredients(Long.valueOf(recipeId));
+    }
+
+    @GetMapping("/all")
+    public Set<IngredientCommand> findALl(){
+        return ingredientService.findAll();
     }
 
     @PostMapping("/save")

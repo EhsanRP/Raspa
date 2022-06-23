@@ -6,6 +6,8 @@ import java.util.Set;
 
 public interface IngredientService {
 
+    Set<IngredientCommand> findAll();
+
     IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand);
 
     void deleteById(Long ingredientId);
