@@ -11,6 +11,7 @@ import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Slf4j
@@ -25,7 +26,9 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public Set<IngredientCommand> findAll() {
-        return ingredientConverter.commandListMaker((Set<Ingredient>) ingredientRepository.findAll());
+        var ingredients = ingredientRepository.findAll();
+        var list = new HashSet<>(ingredients);
+        return ingredientConverter.commandListMaker(list);
     }
 
     @Override

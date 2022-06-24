@@ -18,7 +18,7 @@ public class IngredientConverter {
                 .description(ingredient.getDescription())
                 .amount(ingredient.getAmount())
                 .unitOfMeasure(ingredient.getUnitOfMeasure())
-                .recipeId(ingredient.getRecipe().getId())
+                .recipeId(ingredient.getRecipe() != null? ingredient.getRecipe().getId() : null)
                 .build();
 
         return command;
