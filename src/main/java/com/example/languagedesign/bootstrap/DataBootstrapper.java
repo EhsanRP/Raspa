@@ -44,6 +44,7 @@ public class DataBootstrapper implements CommandLineRunner {
             ingredient.setDescription("Lorem ipsum " + i);
             ingredient.setAmount(2.0);
             ingredient.setUnitOfMeasure("CUP");
+            ingredient.setPrice(2.3);
             ingredient = ingredientRepository.save(ingredient);
             ingredients.add(ingredient);
         }

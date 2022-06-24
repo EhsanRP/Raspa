@@ -17,8 +17,13 @@ public class RecipeController {
     RecipeService recipeService;
 
     @GetMapping("/all")
-    public Set<RecipeCommand> findAllRecipes() {
-        return recipeService.findAllRecipes();
+    public Set<RecipeCommand> findAllApprovedRecipes() {
+        return recipeService.findAllRecipesByIsApproved(true);
+    }
+
+    @GetMapping("/unapproved/all")
+    public Set<RecipeCommand> findAllUnApprovedRecipes() {
+        return recipeService.findAllRecipesByIsApproved(false);
     }
 
     @GetMapping("/category/{categoryId}")

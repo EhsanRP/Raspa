@@ -7,7 +7,7 @@ import java.util.Set;
 
 public interface RecipeService {
 
-    Set<RecipeCommand> findAllRecipes();
+    Set<RecipeCommand> findAllRecipesByIsApproved(Boolean isApproved);
 
     Set<RecipeCommand> findAllRecipesByCategoryId(Long categoryId);
 

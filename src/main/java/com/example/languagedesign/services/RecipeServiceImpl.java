@@ -33,9 +33,9 @@ public class RecipeServiceImpl implements RecipeService {
     ImageService imageService;
 
     @Override
-    public Set<RecipeCommand> findAllRecipes() {
+    public Set<RecipeCommand> findAllRecipesByIsApproved(Boolean isApproved) {
         log.debug("Getting all recipes");
-        var recipeList = new HashSet<>(recipeRepository.findAll());
+        var recipeList = new HashSet<>(recipeRepository.findAllByIsApproved(isApproved));
         return recipeConverter.CommandListMaker(recipeList);
     }
 

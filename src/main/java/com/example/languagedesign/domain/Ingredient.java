@@ -20,6 +20,7 @@ public class Ingredient {
     private String description;
     private Double amount;
     private String unitOfMeasure;
+    private Double price;
 
     @ManyToOne
     private Recipe recipe;

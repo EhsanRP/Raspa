@@ -14,6 +14,7 @@ public class IngredientCommand {
     private String description;
     private Double amount;
     private String unitOfMeasure;
+    private Double price;
 
     private Long recipeId;
 }
