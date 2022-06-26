@@ -69,24 +69,27 @@ public class RecipeServiceImpl implements RecipeService {
         log.debug("Saving a new Recipe");
 
         var recipe = recipeConverter.entityMaker(recipeCommand);
-        recipeCommand.getIngredientCommands()
-                .stream()
-                .map(x -> {
-                    Ingredient ingredient = null;
-                    try {
-                        var ingredientOptional = ingredientRepository.findById(x);
-                        if (ingredientOptional.isEmpty())
-                            throw new ResourceNotFoundException("Ingredient with id " + x + " not fount");
-                        ingredient = ingredientOptional.get();
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    return ingredient;
-                })
-                .peek(recipe::addIngredient);
-        recipe = recipeRepository.save(recipe);
-        return recipeConverter.commandMaker(recipe);
+        recipeRepository.save(recipe);
+        if (!recipeCommand.getCategories().isEmpty()) {
+            for (Long id : recipeCommand.getCategories()) {
+                var category = categoryRepository.findById(id).get();
+                category.addRecipe(recipe);
+                categoryRepository.save(category);
+
+            }
+        }
+        if (!recipeCommand.getIngredients().isEmpty()) {
+            for (Long id : recipeCommand.getIngredients()) {
+                var ingredient = ingredientRepository.findById(id).get();
+                recipe.addIngredient(ingredient);
+                ingredientRepository.save(ingredient);
+            }
+        }
+
+        var savedRecipe = recipeRepository.save(recipe);
+
+        return recipeConverter.commandMaker(savedRecipe);
     }
 
     @Override

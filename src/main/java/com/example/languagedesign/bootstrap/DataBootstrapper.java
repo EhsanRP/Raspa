@@ -1,16 +1,15 @@
 package com.example.languagedesign.bootstrap;
 
-import com.example.languagedesign.domain.Category;
-import com.example.languagedesign.domain.Difficulty;
-import com.example.languagedesign.domain.Ingredient;
-import com.example.languagedesign.domain.Recipe;
+import com.example.languagedesign.domain.*;
 import com.example.languagedesign.repositories.CategoryRepository;
 import com.example.languagedesign.repositories.IngredientRepository;
 import com.example.languagedesign.repositories.RecipeRepository;
+import com.example.languagedesign.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -24,10 +23,17 @@ public class DataBootstrapper implements CommandLineRunner {
     CategoryRepository categoryRepository;
     IngredientRepository ingredientRepository;
 
+    UserRepository userRepository;
     RecipeRepository recipeRepository;
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
+
+        var user = new CustomUser();
+        user.setUsername("raspa");
+        user.setPassword(bCryptPasswordEncoder.encode("password"));
+        userRepository.save(user);
 
         loadCategories();
         loadRecipes(1l);
@@ -37,7 +43,7 @@ public class DataBootstrapper implements CommandLineRunner {
 
     }
 
-    private void loadRecipes( Long categoryId) {
+    private void loadRecipes(Long categoryId) {
         var ingredients = new HashSet<Ingredient>();
         for (int i = 0; i < 10; i++) {
             var ingredient = new Ingredient();

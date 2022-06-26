@@ -37,7 +37,7 @@ public class RecipeConverter {
                 .build();
 
         if (recipe.getIngredients() != null && recipe.getIngredients().size() > 0)
-            command.setIngredientCommands(recipe.getIngredients().stream().map(Ingredient::getId).collect(Collectors.toSet()));
+            command.setIngredients(recipe.getIngredients().stream().map(Ingredient::getId).collect(Collectors.toSet()));
 
         if (recipe.getCategories() != null && recipe.getCategories().size() > 0)
             command.setCategories(recipe.getCategories().stream().map(Category::getId).collect(Collectors.toSet()));
@@ -65,13 +65,6 @@ public class RecipeConverter {
         recipe.setImage(recipeCommand.getImage());
         recipe.setDirections(recipeCommand.getDirections());
         recipe.setDifficulty(recipeCommand.getDifficulty());
-
-        if (!recipeCommand.getCategories().isEmpty()) {
-            for (Long id : recipeCommand.getCategories()) {
-                var category = categoryRepository.findById(id).get();
-                category.addRecipe(recipe);
-            }
-        }
 
         if (recipeCommand.getId() != null)
             recipe.setId(recipeCommand.getId());

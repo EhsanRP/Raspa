@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Value
 @RequiredArgsConstructor
@@ -84,6 +85,12 @@ public class CategoryServiceImpl implements CategoryService {
         if (categoryOptional.isEmpty())
             throw new ResourceNotFoundException("Category with id " + id + " not found");
 
+        var category = categoryRepository.findById(id).get();
+
+        if (category.getRecipes().size() > 1){
+            var recipes = category.getRecipes().stream().peek(recipe -> recipe.getCategories().remove(category)).collect(Collectors.toList());
+            recipeRepository.saveAll(recipes);
+        }
         categoryRepository.deleteById(id);
     }
 }
