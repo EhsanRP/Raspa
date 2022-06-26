@@ -4,6 +4,7 @@ import com.example.languagedesign.commands.RecipeCommand;
 import com.example.languagedesign.domain.Category;
 import com.example.languagedesign.domain.Ingredient;
 import com.example.languagedesign.domain.Recipe;
+import com.example.languagedesign.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ public class RecipeConverter {
 
     CategoryConverter categoryConverter;
     IngredientConverter ingredientConverter;
+    CategoryRepository categoryRepository;
 
     public RecipeCommand commandMaker(Recipe recipe) {
         var command = RecipeCommand
@@ -63,6 +65,13 @@ public class RecipeConverter {
         recipe.setImage(recipeCommand.getImage());
         recipe.setDirections(recipeCommand.getDirections());
         recipe.setDifficulty(recipeCommand.getDifficulty());
+
+        if (!recipeCommand.getCategories().isEmpty()) {
+            for (Long id : recipeCommand.getCategories()) {
+                var category = categoryRepository.findById(id).get();
+                category.addRecipe(recipe);
+            }
+        }
 
         if (recipeCommand.getId() != null)
             recipe.setId(recipeCommand.getId());

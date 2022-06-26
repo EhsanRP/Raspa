@@ -21,6 +21,11 @@ public class RecipeController {
         return recipeService.findAllRecipesByIsApproved(true);
     }
 
+    @GetMapping("/get/{recipeId}")
+    public RecipeCommand findRecipeById(@PathVariable String recipeId){
+        return recipeService.findRecipeById(Long.valueOf(recipeId));
+    }
+
     @GetMapping("/unapproved/all")
     public Set<RecipeCommand> findAllUnApprovedRecipes() {
         return recipeService.findAllRecipesByIsApproved(false);

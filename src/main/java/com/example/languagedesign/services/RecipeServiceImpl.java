@@ -30,7 +30,6 @@ public class RecipeServiceImpl implements RecipeService {
     IngredientRepository ingredientRepository;
     RecipeRepository recipeRepository;
     CategoryRepository categoryRepository;
-    ImageService imageService;
 
     @Override
     public Set<RecipeCommand> findAllRecipesByIsApproved(Boolean isApproved) {

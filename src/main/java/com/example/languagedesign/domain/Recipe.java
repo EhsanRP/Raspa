@@ -27,7 +27,7 @@ public class Recipe {
     private Boolean isApproved = false;
 
     @Lob
-    private Byte[] image;
+    private String image;
 
     @Lob
     private String directions;

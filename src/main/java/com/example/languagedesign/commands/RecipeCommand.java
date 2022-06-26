@@ -19,7 +19,7 @@ public class RecipeCommand {
     private Integer cookTime;
     private Integer servings;
     private String source;
-    private Byte[] image;
+    private String image;
     private String directions;
     private Set<Long> ingredientCommands = new HashSet<>();
     private Difficulty difficulty;
