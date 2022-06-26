@@ -31,6 +31,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public CustomUser createUser(String username, String password) {
-        return null;
+        var user = new CustomUser();
+
+        if (userRepository.findByUsername(username).isPresent())
+            throw new ResourceNotFoundException("User with Username " + username + " already exists");
+
+        user.setUsername(username);
+        user.setPassword(bCryptPasswordEncoder.encode(password));
+
+        return userRepository.save(user);
     }
 }
