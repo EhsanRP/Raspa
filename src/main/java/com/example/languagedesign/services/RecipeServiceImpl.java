@@ -76,7 +76,6 @@ public class RecipeServiceImpl implements RecipeService {
                 var category = categoryRepository.findById(id).get();
                 category.addRecipe(recipe);
                 categoryRepository.save(category);
-
             }
         }
         if (!recipeCommand.getIngredients().isEmpty()) {
